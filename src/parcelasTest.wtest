@@ -1,0 +1,45 @@
+import parcelas.*
+import plantas.*
+
+describe "Parcelas" {
+	
+	const parcela = new Parcela(ancho = 20, largo = 1, horasDeSol = 8) 
+	const parcelaEcologica = new ParcelaEcologica(ancho = 20, largo = 1, horasDeSol = 9) 
+	const soja = new Soja(altura = 1, anioDeObtencion = 2009)
+	const soja2 = new Soja(altura = 1, anioDeObtencion = 2009)
+	const soja3 = new Soja(altura = 1, anioDeObtencion = 2009)
+	const soja4 = new Soja(altura = 1, anioDeObtencion = 2009)
+	const soja5 = new Soja(altura = 1, anioDeObtencion = 2009)
+	
+	test "parcelaSuperficie" {
+		assert.equals(20, parcela.superficie())
+	}	
+	test "parcelaCantidadMaximaDePlantas"{
+		assert.equals(4, parcela.cantidadMaximaDePlantas())
+	}
+	
+	test "agregandoPlantas" {
+		parcela.plantar(soja)
+		parcela.plantar(soja2)
+		parcela.plantar(soja3)
+		parcela.plantar(soja4)
+		assert.notThat(parcela.tieneComplicaciones())
+	}
+	
+	test "noPuedeAgregarPlantas" {
+		parcela.plantar(soja)
+		parcela.plantar(soja2)
+		parcela.plantar(soja3)
+		parcela.plantar(soja4)
+		try {
+			parcela.plantar(soja5)
+		} catch e {
+			console.println("No hay lugar para la planta o podria morir.")
+		}
+		assert.equals(4, parcela.plantas().size())
+	}
+	
+	test "parcelaEcologicaAsociaBien" {
+		assert.that(parcelaEcologica.seAsociaBien(soja))
+	}
+}

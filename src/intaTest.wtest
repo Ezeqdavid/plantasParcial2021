@@ -1,0 +1,53 @@
+import plantas.*
+import parcelas.*
+import inta.*
+
+describe "Test INTA" {
+	
+	const mentaGrande = new Menta(altura = 1, anioDeObtencion = 1977)
+	const mentaChica = new Menta(altura = 0.3, anioDeObtencion = 1977)
+	const soja = new Soja(altura = 1, anioDeObtencion = 2009)
+	const soja2 = new Soja(altura = 1, anioDeObtencion = 2009)
+	const soja3 = new Soja(altura = 1, anioDeObtencion = 2009)
+	const soja4 = new Soja(altura = 1, anioDeObtencion = 2009)
+	const soja5 = new Soja(altura = 1, anioDeObtencion = 2009)
+	const quinoa1 = new Quinoa(altura = 10, horasDeSol = 12, anioDeObtencion = 2010)
+	const quinoa2 = new Quinoa(altura = 10, horasDeSol = 9, anioDeObtencion = 2001)
+	const hierbaBuena = new HierbaBuena(altura = 1, anioDeObtencion = 1977)
+	const sojaTransgenica = new SojaTransgenica(altura = 10, anioDeObtencion = 2009)
+	
+	const parcela = new Parcela(ancho = 20, largo = 1, horasDeSol = 8) 
+	const parcelaEcologica = new ParcelaEcologica(ancho = 40, largo = 1, horasDeSol = 9) 
+	
+	const inta = new INTA()
+	
+	test "INTApromedioPlantas"{
+		parcela.plantar(soja)
+		parcela.plantar(soja2)
+		parcela.plantar(soja3)
+		
+		parcelaEcologica.plantar(quinoa1)
+		parcelaEcologica.plantar(quinoa2)
+		
+		inta.agregar(parcela)
+		inta.agregar(parcelaEcologica)
+		
+		assert.equals(2.5, inta.promedioDePlantas())
+	}
+	
+	test "laMasAutosustentable" {
+		parcela.plantar(quinoa1)
+		parcela.plantar(quinoa2)
+		
+		parcelaEcologica.plantar(soja)
+		parcelaEcologica.plantar(soja2)
+		parcelaEcologica.plantar(soja3)
+		parcelaEcologica.plantar(soja4)		
+		parcelaEcologica.plantar(soja5)
+		
+		inta.agregar(parcela)
+		inta.agregar(parcelaEcologica)
+		
+		assert.equals(parcelaEcologica, inta.laMasAutosustentable())
+	}
+}
